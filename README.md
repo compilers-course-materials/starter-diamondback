@@ -198,14 +198,55 @@ There are a few new pieces to the implementation:
   want to define a helper that performs ANF on a _list_ of expressions, and
   takes a "k" that expects to receive a _list_ of results.
 - A new set of `well_formed` functions, which are called prior to performing
-  ANF and are used to report the errors above.
+  ANF and are used to report the errors above.  These functions all return a
+  `string list`, which represents _all_ the errors that are found in a program
+  or expression.  So a program like
+
+  ```
+  def f(x, x):
+    y
+  f(1)
+  ```
+
+  would report three errors, one for `y` being unbound, one for duplicated `x`
+  parameters, and one for the arity mismatch on the call to `f`.  Each string
+  should contain (at least) the corresponding substring above.
+
+  These errors can be reported in any order; in general (and in grading), it's
+  easy to test for one at a time.  But reporting many makes using the `main`
+  of the compiler much more pleasant, and is a nice view into the kinds of
+  compiler ergonomics we should expect from a modern compiler.
 - The `AProgram` structure, which contains both function declarations and the
   expression for `our_code_starts_here`.  You will probably want to generate
   an assembly structure that looks like:
 
   ```
   ;; extern and global stuff
-  fun_decl1
-
+fun_decl1:
+  ;; code for fun_decl1, including stack management
+fun_decl2:
+  ;; code for fun_decl2, including stack management
+...
+our_code_starts_here:
+  ;; main entrypoint, as before, with stack management
+internal_error_non_number:
+  ;; errors, as before
+...
   ```
+
+### Testing
+
+There is one new testing function provided, `tvg`.  This works just like `t`,
+except it runs `valgrind` on the executable it creates, and checks whether or
+not it reports errors.  If `valgrind` does report memory errors, the test
+fails and the errors are reported.  The test succeeds if there are no memory
+errors and the answer is correct.
+
+You can test the well-formedness errors using the error tester as usual.
+
+### Handin
+
+Hand a completed implementation in by **Friday**, March 4 at 11:59pm (there is
+no programming assignment out over break).
+
 
