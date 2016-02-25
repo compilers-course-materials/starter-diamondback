@@ -1,6 +1,6 @@
 # Diamondback
 
-[picture]
+![A diamondback](https://upload.wikimedia.org/wikipedia/commons/d/d4/Crotalus_ruber_02.jpg)
 
 In this assignment, you'll implement a compiler for a small language with
 functions declarations and function calls, conforming to the C stack layout.
