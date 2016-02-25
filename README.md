@@ -178,11 +178,14 @@ _statically_; that is, before the program runs:
   report an error containg the string "duplicate parameter"
 - If there are multiple function definitions with the same name, report an
   error containing the string "duplicate function"
+- If a numeric constant is too large (as discussed in class), report an error
+  containing the string "too large"
 
 Again, these errors should stop the program from compiling, _not_ happen at
 runtime.  You can continue to assume that all identifiers within a function
 body have different names, which is a requirement for ANF (we could implement
-another pass to rename variables, but we won't do that here).
+another pass to rename variables, but we won't do that here).  See the notes
+on `well_formed` below for implementation details.
 
 ### Implementation
 
@@ -248,5 +251,4 @@ You can test the well-formedness errors using the error tester as usual.
 
 Hand a completed implementation in by **Friday**, March 4 at 11:59pm (there is
 no programming assignment out over break).
-
 
