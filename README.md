@@ -31,12 +31,20 @@ _main expression_.
 
 ```
 <program> :=
-  | decls expr
-  | expr
+  | <decls> <expr>
+  | <expr>
 
 <decls> :=
-  | decl
-  | decl decls
+  | <decl>
+  | <decl> <decls>
+
+<decl> :=
+  | def <identifier>(<ids>): <expr>
+  | def <identifier>(): <expr>
+
+<ids> :=
+  | <identifier>
+  | <identifier> , <ids>
 
 <expr> :=
   | let <bindings> in <expr>
